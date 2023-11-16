@@ -11,6 +11,7 @@
 		F2E35B9C2B060FA800B0F09B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E35B9B2B060FA800B0F09B /* ContentView.swift */; };
 		F2E35B9E2B060FA800B0F09B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F2E35B9D2B060FA800B0F09B /* Assets.xcassets */; };
 		F2E35BA12B060FA800B0F09B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F2E35BA02B060FA800B0F09B /* Preview Assets.xcassets */; };
+		F2E35BA92B0612CA00B0F09B /* RoundedStyleModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E35BA82B0612CA00B0F09B /* RoundedStyleModifier.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +20,7 @@
 		F2E35B9B2B060FA800B0F09B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		F2E35B9D2B060FA800B0F09B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F2E35BA02B060FA800B0F09B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		F2E35BA82B0612CA00B0F09B /* RoundedStyleModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedStyleModifier.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +54,7 @@
 			isa = PBXGroup;
 			children = (
 				F2E35B992B060FA800B0F09B /* xDownApp.swift */,
+				F2E35BA72B0612C400B0F09B /* Extensions */,
 				F2E35B9B2B060FA800B0F09B /* ContentView.swift */,
 				F2E35B9D2B060FA800B0F09B /* Assets.xcassets */,
 				F2E35B9F2B060FA800B0F09B /* Preview Content */,
@@ -65,6 +68,14 @@
 				F2E35BA02B060FA800B0F09B /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		F2E35BA72B0612C400B0F09B /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				F2E35BA82B0612CA00B0F09B /* RoundedStyleModifier.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -138,6 +149,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F2E35B9C2B060FA800B0F09B /* ContentView.swift in Sources */,
+				F2E35BA92B0612CA00B0F09B /* RoundedStyleModifier.swift in Sources */,
 				F2E35B9A2B060FA800B0F09B /* xDownApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
