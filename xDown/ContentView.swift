@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    
+    @StateObject var twitterDownloader = TwitterVideoDownloaderVM()
     @State var urlText = ""
     
     var body: some View {
@@ -30,20 +30,18 @@ struct ContentView: View {
             
             //MARK: URL INPUT
             TextField("Twitter Video URL & Photo or GIF URL", text: $urlText)
+                .keyboardType(.URL)
                 .roundedStyle(backgroundColor: .black.opacity(0.1))
                 .padding(.top, 20)
             
             
             //MARK: FIND BUTTON
             Button {
-                
+                twitterDownloader.getVideo(from: urlText)
             } label: {
                 Text("Find")
                     .roundedStyle(backgroundColor: Color.black.opacity(0.88))
             }
-
-          
-            
         }
         .padding()
     }
