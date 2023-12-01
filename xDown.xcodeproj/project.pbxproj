@@ -9,24 +9,27 @@
 /* Begin PBXBuildFile section */
 		F2BBB81A2B192A2400F19867 /* TwitterMediaModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2BBB8192B192A2400F19867 /* TwitterMediaModel.swift */; };
 		F2E35B9A2B060FA800B0F09B /* xDownApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E35B992B060FA800B0F09B /* xDownApp.swift */; };
-		F2E35B9C2B060FA800B0F09B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E35B9B2B060FA800B0F09B /* ContentView.swift */; };
+		F2E35B9C2B060FA800B0F09B /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E35B9B2B060FA800B0F09B /* HomeView.swift */; };
 		F2E35B9E2B060FA800B0F09B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F2E35B9D2B060FA800B0F09B /* Assets.xcassets */; };
 		F2E35BA12B060FA800B0F09B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F2E35BA02B060FA800B0F09B /* Preview Assets.xcassets */; };
 		F2E35BA92B0612CA00B0F09B /* RoundedStyleModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E35BA82B0612CA00B0F09B /* RoundedStyleModifier.swift */; };
 		F2E35BAD2B062D6B00B0F09B /* TwitterVideoDownloaderVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E35BAC2B062D6B00B0F09B /* TwitterVideoDownloaderVM.swift */; };
 		F2E35BAF2B062D8700B0F09B /* script.js in Resources */ = {isa = PBXBuildFile; fileRef = F2E35BAE2B062D8700B0F09B /* script.js */; };
+		F2F6CB242B1A5DCB001AC2EA /* DownloadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F6CB232B1A5DCB001AC2EA /* DownloadView.swift */; };
+		F2F6CB272B1A6355001AC2EA /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = F2F6CB262B1A6355001AC2EA /* SDWebImageSwiftUI */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		F2BBB8192B192A2400F19867 /* TwitterMediaModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitterMediaModel.swift; sourceTree = "<group>"; };
 		F2E35B962B060FA800B0F09B /* xDown.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = xDown.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2E35B992B060FA800B0F09B /* xDownApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = xDownApp.swift; sourceTree = "<group>"; };
-		F2E35B9B2B060FA800B0F09B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		F2E35B9B2B060FA800B0F09B /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		F2E35B9D2B060FA800B0F09B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F2E35BA02B060FA800B0F09B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		F2E35BA82B0612CA00B0F09B /* RoundedStyleModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedStyleModifier.swift; sourceTree = "<group>"; };
 		F2E35BAC2B062D6B00B0F09B /* TwitterVideoDownloaderVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwitterVideoDownloaderVM.swift; sourceTree = "<group>"; };
 		F2E35BAE2B062D8700B0F09B /* script.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = script.js; sourceTree = "<group>"; };
+		F2F6CB232B1A5DCB001AC2EA /* DownloadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -34,6 +37,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F2F6CB272B1A6355001AC2EA /* SDWebImageSwiftUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -61,7 +65,8 @@
 			children = (
 				F2E35B992B060FA800B0F09B /* xDownApp.swift */,
 				F2E35BA72B0612C400B0F09B /* Extensions */,
-				F2E35B9B2B060FA800B0F09B /* ContentView.swift */,
+				F2E35B9B2B060FA800B0F09B /* HomeView.swift */,
+				F2F6CB232B1A5DCB001AC2EA /* DownloadView.swift */,
 				F2E35BB02B062E0A00B0F09B /* TwitterDownloader */,
 				F2E35B9D2B060FA800B0F09B /* Assets.xcassets */,
 				F2E35B9F2B060FA800B0F09B /* Preview Content */,
@@ -111,6 +116,9 @@
 			dependencies = (
 			);
 			name = xDown;
+			packageProductDependencies = (
+				F2F6CB262B1A6355001AC2EA /* SDWebImageSwiftUI */,
+			);
 			productName = xDown;
 			productReference = F2E35B962B060FA800B0F09B /* xDown.app */;
 			productType = "com.apple.product-type.application";
@@ -139,6 +147,9 @@
 				Base,
 			);
 			mainGroup = F2E35B8D2B060FA700B0F09B;
+			packageReferences = (
+				F2F6CB252B1A6355001AC2EA /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
+			);
 			productRefGroup = F2E35B972B060FA800B0F09B /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -166,7 +177,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F2E35B9C2B060FA800B0F09B /* ContentView.swift in Sources */,
+				F2F6CB242B1A5DCB001AC2EA /* DownloadView.swift in Sources */,
+				F2E35B9C2B060FA800B0F09B /* HomeView.swift in Sources */,
 				F2E35BAD2B062D6B00B0F09B /* TwitterVideoDownloaderVM.swift in Sources */,
 				F2E35BA92B0612CA00B0F09B /* RoundedStyleModifier.swift in Sources */,
 				F2E35B9A2B060FA800B0F09B /* xDownApp.swift in Sources */,
@@ -307,6 +319,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -336,6 +349,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -371,6 +385,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		F2F6CB252B1A6355001AC2EA /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		F2F6CB262B1A6355001AC2EA /* SDWebImageSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F2F6CB252B1A6355001AC2EA /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
+			productName = SDWebImageSwiftUI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = F2E35B8E2B060FA700B0F09B /* Project object */;
 }

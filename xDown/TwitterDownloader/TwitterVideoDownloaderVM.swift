@@ -8,15 +8,19 @@ class TwitterVideoDownloaderVM: NSObject, ObservableObject, WKNavigationDelegate
     @Published var showWebView: Bool = false
     @Published var downloadResult: String?
     @Published var twitterMedia: TwitterMediaModel?
+    @Published var isLoading: Bool = false
+    @Published var isShowingDownloadlView = false
+    
     
     func getVideo(from url: String) {
         guard url != "" else { return }
-        
+    
         showWebView = false
         setupWebView(with: url)
     }
  
     private func setupWebView(with url: String) {
+        isLoading = true
         let config = WKWebViewConfiguration()
         let userScript = WKUserScript(source: getScript(), injectionTime: .atDocumentStart, forMainFrameOnly: false)
         config.userContentController.addUserScript(userScript)
@@ -40,6 +44,10 @@ class TwitterVideoDownloaderVM: NSObject, ObservableObject, WKNavigationDelegate
         return ""
     }
     
+    func showError() {
+        
+    }
+    
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         if let dict = message.body as? Dictionary<String, AnyObject>,
             let status = dict["status"] as? Int,
@@ -50,22 +58,22 @@ class TwitterVideoDownloaderVM: NSObject, ObservableObject, WKNavigationDelegate
                 if (status == 200) {
                     do {
                         if let jsonData = responseText.data(using: .utf8) {
+                            // Çözümleme başarılı oldu, twitterModel'i kullanabilirsiniz
                             let twitterMedia = try JSONDecoder().decode(TwitterMediaModel.self, from: jsonData)
                             self.twitterMedia = twitterMedia
-                            print(twitterMedia)
-                            // Çözümleme başarılı oldu, twitterModel'i kullanabilirsiniz
+                            self.isShowingDownloadlView = true
+                            self.isLoading = false
+                            print(responseText)
                         } else {
                             // Dizeyi veriye dönüştürme hatası
-                            print("hata")
+                            showError()
                         }
                     } catch {
                         // Çözümleme hatası
-                        print("Hata: \(error)")
+                        showError()
                     }
-                    
                 }
             }
         }
     }
-    
 }
