@@ -49,7 +49,8 @@ struct Entities: Codable {
 }
 
 // MARK: - Media
-struct Media: Codable {
+struct Media: Codable, Identifiable {
+    var id = UUID()
     let displayURL: String?
     let expandedURL: String?
     let mediaURLHTTPS: String?

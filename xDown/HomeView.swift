@@ -9,14 +9,14 @@ import SwiftUI
 
 struct HomeView: View {
     @StateObject var twitterDownloader = TwitterVideoDownloaderVM()
-    @State var urlText = "https://twitter.com/_KomutanLogar/status/1730346492697948575"
+    @State var urlText = "https://twitter.com/muratdursun1453/status/1725389764994503127"
     
     
     var body: some View {
         
         NavigationView {
             VStack(alignment: .leading) {
-                NavigationLink(destination: DownloadView(), isActive: $twitterDownloader.isShowingDownloadlView) {  }
+                NavigationLink(destination: DownloadView(twitterMedia: twitterDownloader.twitterMedia), isActive: $twitterDownloader.isShowingDownloadlView) {  }
                 
                 
                 //MARK: TOP BUTTONS
@@ -36,7 +36,7 @@ struct HomeView: View {
                 //MARK: URL INPUT
                 TextField("Twitter Video URL & Photo or GIF URL", text: $urlText)
                     .keyboardType(.URL)
-                    .roundedStyle(backgroundColor: .black.opacity(0.1))
+                    .roundedStyle(backgroundColor: .secondary.opacity(0.3))
                     .padding(.top, 20)
                 
                 
@@ -47,12 +47,12 @@ struct HomeView: View {
                     if (twitterDownloader.isLoading) {
                         ProgressView()
                                    .progressViewStyle(CircularProgressViewStyle(tint: Color.white))
-                                   .roundedStyle(backgroundColor: Color.black.opacity(0.88))
+                                   .roundedStyle(backgroundColor: Color.secondary.opacity(0.88))
                     } else {
                         Text("Find")
-                            .roundedStyle(backgroundColor: Color.black.opacity(0.88))
+                            .roundedStyle(backgroundColor: Color.secondary.opacity(0.88))
                     }
-                }
+                }.disabled(twitterDownloader.isLoading)
             }
             .padding()
         }
@@ -79,10 +79,10 @@ struct LabeledIconButton: View {
         } icon: {
             Image(systemName: icon)
                 .padding()
-                //.background(.secondary.opacity(0.2))
+                .background(Color.secondary.opacity(0.2))
                 .clipShape(Circle())
                 .padding([.horizontal])
-                .foregroundColor(.black)
+                .foregroundColor(.white)
         }.font(.title2)
     }
 }
