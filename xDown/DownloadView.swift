@@ -11,11 +11,8 @@ import AVKit
 
 
 struct DownloadView: View {
-    @State private var selectedQuality: String = "720p"
     @State private var isPlaying: Bool = false
-    
     var twitterMedia: TwitterMediaModel?
-    
     
     var body: some View {
         VStack {
@@ -26,7 +23,7 @@ struct DownloadView: View {
                     ForEach(medias) { media in
                         
                         MediaItem(media: media, isPlaying: $isPlaying)
-                        
+
                     }
                 }
               
@@ -34,47 +31,8 @@ struct DownloadView: View {
                 
                
                 
-                
-
-                
                 VStack {
-                    // Aşağıdaki yarıda video kalite butonları
-                    HStack {
-                        Button(action: {
-                            // 360p seçildiğinde yapılacak işlemler
-                            self.selectedQuality = "360p"
-                        }) {
-                            Text("360p")
-                                .padding()
-                                .background(selectedQuality == "360p" ? Color.blue : Color.gray)
-                                .foregroundColor(.white)
-                                .cornerRadius(8)
-                        }
-
-                        Button(action: {
-                            // 720p seçildiğinde yapılacak işlemler
-                            self.selectedQuality = "720p"
-                        }) {
-                            Text("720p")
-                                .padding()
-                                .background(selectedQuality == "720p" ? Color.blue : Color.gray)
-                                .foregroundColor(.white)
-                                .cornerRadius(8)
-                        }
-
-                        Button(action: {
-                            // 1080p seçildiğinde yapılacak işlemler
-                            self.selectedQuality = "1080p"
-                        }) {
-                            Text("1080p")
-                                .padding()
-                                .background(selectedQuality == "1080p" ? Color.blue : Color.gray)
-                                .foregroundColor(.white)
-                                .cornerRadius(8)
-                        }
-                        
-                    }
-                    .padding(.bottom)
+                   
                     
                     HStack {
                         Image(systemName: "square.and.arrow.up")
@@ -114,6 +72,8 @@ struct MediaItem: View {
     //= AVPlayer(url: URL(string: "https://video.twimg.com/amplify_video/1730346441280016384/pl/RC5_ujzaEDw5zfJh.m3u8?tag=14&container=fmp4")!)
     
     var body: some View {
+        let videoArray = media.videoInfo?.variants?.filter({ $0.url?.contains("m3u8") == false })
+        
         ZStack(alignment: .center) {
             if (isPlaying && player != nil) {
                 VideoPlayer(player: player)
@@ -127,7 +87,7 @@ struct MediaItem: View {
 
                 Button(action: {
                     // Videoyu oynatma işlemleri buraya eklenecek
-                    player = AVPlayer(url: URL(string: "https://video.twimg.com/amplify_video/1730346441280016384/vid/avc1/720x1280/pql7Uuw2pWCiCuXz.mp4?tag=14")!)
+                    player = AVPlayer(url: URL(string:  videoArray?.first?.url ?? "")!)
                     player?.seek(to: .zero)
                     player?.isMuted = false
                     player?.volume = 1
