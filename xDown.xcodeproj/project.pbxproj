@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F215B70E2B31AF8C00D0F31D /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = F215B70D2B31AF8C00D0F31D /* Alamofire */; };
+		F215B7102B31E11000D0F31D /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = F215B70F2B31E11000D0F31D /* String.swift */; };
 		F2BBB81A2B192A2400F19867 /* TwitterMediaModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2BBB8192B192A2400F19867 /* TwitterMediaModel.swift */; };
 		F2E35B9A2B060FA800B0F09B /* xDownApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E35B992B060FA800B0F09B /* xDownApp.swift */; };
 		F2E35B9C2B060FA800B0F09B /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E35B9B2B060FA800B0F09B /* HomeView.swift */; };
@@ -20,6 +22,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F215B70F2B31E11000D0F31D /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		F2BBB8192B192A2400F19867 /* TwitterMediaModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitterMediaModel.swift; sourceTree = "<group>"; };
 		F2E35B962B060FA800B0F09B /* xDown.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = xDown.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2E35B992B060FA800B0F09B /* xDownApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = xDownApp.swift; sourceTree = "<group>"; };
@@ -38,6 +41,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F2F6CB272B1A6355001AC2EA /* SDWebImageSwiftUI in Frameworks */,
+				F215B70E2B31AF8C00D0F31D /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -85,6 +89,7 @@
 		F2E35BA72B0612C400B0F09B /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				F215B70F2B31E11000D0F31D /* String.swift */,
 				F2E35BA82B0612CA00B0F09B /* RoundedStyleModifier.swift */,
 			);
 			path = Extensions;
@@ -118,6 +123,7 @@
 			name = xDown;
 			packageProductDependencies = (
 				F2F6CB262B1A6355001AC2EA /* SDWebImageSwiftUI */,
+				F215B70D2B31AF8C00D0F31D /* Alamofire */,
 			);
 			productName = xDown;
 			productReference = F2E35B962B060FA800B0F09B /* xDown.app */;
@@ -149,6 +155,7 @@
 			mainGroup = F2E35B8D2B060FA700B0F09B;
 			packageReferences = (
 				F2F6CB252B1A6355001AC2EA /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
+				F215B70C2B31AF8C00D0F31D /* XCRemoteSwiftPackageReference "Alamofire" */,
 			);
 			productRefGroup = F2E35B972B060FA800B0F09B /* Products */;
 			projectDirPath = "";
@@ -181,6 +188,7 @@
 				F2E35B9C2B060FA800B0F09B /* HomeView.swift in Sources */,
 				F2E35BAD2B062D6B00B0F09B /* TwitterVideoDownloaderVM.swift in Sources */,
 				F2E35BA92B0612CA00B0F09B /* RoundedStyleModifier.swift in Sources */,
+				F215B7102B31E11000D0F31D /* String.swift in Sources */,
 				F2E35B9A2B060FA800B0F09B /* xDownApp.swift in Sources */,
 				F2BBB81A2B192A2400F19867 /* TwitterMediaModel.swift in Sources */,
 			);
@@ -387,6 +395,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		F215B70C2B31AF8C00D0F31D /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
 		F2F6CB252B1A6355001AC2EA /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI.git";
@@ -398,6 +414,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		F215B70D2B31AF8C00D0F31D /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F215B70C2B31AF8C00D0F31D /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
 		F2F6CB262B1A6355001AC2EA /* SDWebImageSwiftUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = F2F6CB252B1A6355001AC2EA /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;

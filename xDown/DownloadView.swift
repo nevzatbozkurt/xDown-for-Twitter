@@ -11,22 +11,37 @@ import AVKit
 
 
 struct DownloadView: View {
-    @State private var isPlaying: Bool = false
     var twitterMedia: TwitterMediaModel?
+    @State private var isPresented = false
+    @State private var selectedTab: Int = 0
+    
+    
+    func startDownload(downloadURL: String) {
+        if let url = URL(string: downloadURL) {
+            print("LOG: ", url)
+        } else {
+            //ERROR MESAJI VER
+        }
+    }
+    
+    func getQuality(url: String) -> String {
+        let splited = url.components(separatedBy: "/")
+        if splited.count < 2 { return "Download" }
+        let q = String(splited[splited.count - 2])
+        return q
+    }
     
     var body: some View {
         VStack {
             if let medias = twitterMedia?.data?.tweetResult?.result?.legacy?.entities?.media {
                 // Yukarıdaki yarıda fotoğraf ve oynatma butonu
                 
-                TabView {
-                    ForEach(medias) { media in
-                        
-                        MediaItem(media: media, isPlaying: $isPlaying)
-
+                TabView(selection: $selectedTab) {
+                        ForEach(Array(medias.enumerated()), id: \.1.id) { (index, media) in
+                        MediaItem(media: media)
+                            .tag(index)
                     }
                 }
-              
                 .tabViewStyle(.page)
                 
                
@@ -40,13 +55,59 @@ struct DownloadView: View {
                             .frame(width: 90, height: 90)
                             .padding(0)
                         
-                        Text("Download to Gallery")
+                        Button("Download to Gallery", action: {
+                            let media = medias[selectedTab]
+                            
+                            //Birden fazla kalite var ise önce kalite seçimini yapıp oradan download başlatıyoruz.
+                            if (media.type == "video") {
+                                self.isPresented = true
+                                
+                                //ViewModel Download func.
+                                return
+                            }
+                            
+                            
+                            var downloadURL = ""
+                            //GIF ise url buluyoruz.
+                            if (media.type == "animated_gif") {
+                                if let video = media.videoInfo?.variants?.first?.url {
+                                    downloadURL = video
+                                }
+                            }
+                            
+                            //FOTO ise url buluyoruz.
+                            if let url = media.mediaURLHTTPS {
+                                downloadURL = url
+                            }
+                            
+                            startDownload(downloadURL: downloadURL)
+                            
+                        })
                             .roundedStyle(backgroundColor: Color.secondary.opacity(0.3))
-
-                        
+                            .actionSheet(isPresented: $isPresented) {
+                                let media = medias[selectedTab].videoInfo?.variants
+                                let videoURLs = media?.compactMap { variant in
+                                    if let url = variant.url, !url.contains("m3u8") {
+                                        return url
+                                    }
+                                    return nil
+                                } ?? [""]
+                              
+                              
+                                return {
+                                    ActionSheet(
+                                        title: Text("Çözünürlük Seç"),
+                                        buttons: videoURLs.map { url in
+                                                .default(Text(getQuality(url: url))
+                                                ) {
+                                                    startDownload(downloadURL: url)
+                                                //ViewModel Download func.
+                                            }
+                                        } + [.cancel()]
+                                    )
+                                }()
+                            }
                     }.padding(.horizontal)
-                    
-                    
                 }
                 .padding(.bottom)
                 
@@ -59,46 +120,71 @@ struct DownloadView: View {
         }
         .background(Color.black)
         .edgesIgnoringSafeArea(.all)
-        
-        
+        .onDisappear() {
+            print("LOG: onDisappear 2")
+        }
     }
 }
 
 
 struct MediaItem: View {
     var media: Media
-    @Binding var isPlaying: Bool
+    @State private var isPlaying: Bool = false
     @State private var player: AVPlayer?
     //= AVPlayer(url: URL(string: "https://video.twimg.com/amplify_video/1730346441280016384/pl/RC5_ujzaEDw5zfJh.m3u8?tag=14&container=fmp4")!)
     
     var body: some View {
         let videoArray = media.videoInfo?.variants?.filter({ $0.url?.contains("m3u8") == false })
-        
+        let isPhoto = media.type?.contains("photo")
         ZStack(alignment: .center) {
             if (isPlaying && player != nil) {
                 VideoPlayer(player: player)
-                    .frame(maxWidth: .infinity)
-                    .ignoresSafeArea()
-                    
+                    .aspectRatio(contentMode: .fit)
+                
+                Button(action: {
+                    // Videoyu oynatma işlemleri buraya eklenecek
+                    player?.isMuted = true
+                    player?.volume = 0
+                    player?.pause()
+                    self.isPlaying = false
+                }) {
+                    Image(systemName: "pause.circle.fill")
+                        .resizable()
+                        .frame(maxWidth: .infinity)
+                        .frame(width: 50, height: 50)
+                        .foregroundColor(.white)
+                        .opacity(0.33)
+                        .frame(maxWidth: .infinity)
+                        .frame(maxHeight: .infinity)
+                }
+                .disabled(isPhoto ?? false)
+                .opacity(isPhoto == true ? 0 : 1)
+                
             } else {
                 WebImage(url: URL(string: media.mediaURLHTTPS ?? ""))
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-
+                
                 Button(action: {
                     // Videoyu oynatma işlemleri buraya eklenecek
                     player = AVPlayer(url: URL(string:  videoArray?.first?.url ?? "")!)
                     player?.seek(to: .zero)
                     player?.isMuted = false
                     player?.volume = 1
+                    player?.play()
                     self.isPlaying = true
                 }) {
                     Image(systemName: "play.circle.fill")
                         .resizable()
-                        .aspectRatio(contentMode: .fit)
                         .frame(width: 50, height: 50)
                         .foregroundColor(.white)
+                        .frame(maxWidth: .infinity)
+                        .frame(height: UIScreen.main.bounds.height / 2)
                 }
+                .disabled(isPhoto ?? false)
+                .opacity(isPhoto == true ? 0 : 1)
+                
+                
             }
                 
         }

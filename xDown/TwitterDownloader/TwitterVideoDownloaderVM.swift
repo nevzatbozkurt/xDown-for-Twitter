@@ -1,5 +1,6 @@
 import Foundation
 import WebKit
+import Alamofire
 
 
 class TwitterVideoDownloaderVM: NSObject, ObservableObject, WKNavigationDelegate, WKScriptMessageHandler {
@@ -10,7 +11,7 @@ class TwitterVideoDownloaderVM: NSObject, ObservableObject, WKNavigationDelegate
     @Published var twitterMedia: TwitterMediaModel?
     @Published var isLoading: Bool = false
     @Published var isShowingDownloadlView = false
-    
+    @Published var quotedTwitUrl: String?
     
     func getVideo(from url: String) {
         guard url != "" else { return }
@@ -61,9 +62,29 @@ class TwitterVideoDownloaderVM: NSObject, ObservableObject, WKNavigationDelegate
                             // Çözümleme başarılı oldu, twitterModel'i kullanabilirsiniz
                             let twitterMedia = try JSONDecoder().decode(TwitterMediaModel.self, from: jsonData)
                             self.twitterMedia = twitterMedia
+                            
+                            if responseText.contains("quoted_status_result")  {
+                                let split = responseText.components(separatedBy: "quoted_status_result")
+                                if split.count > 1 {
+                                    let split2 = split[1].components(separatedBy: "\"extended_entities\":{")
+                                    if split2.count > 1 {
+                                        if let url =  split2[1].findBetween(start: "\"expanded_url\":\"", end: "\"") {
+                                            //Alıntı yapılan bir twit ise ve media olarak herhangi bir şey yok ise altıntı içindeki twittin urlni bulup ona gidiyoruz.
+                                            if self.twitterMedia?.data?.tweetResult?.result?.legacy?.entities?.media == nil {
+                                                self.getVideo(from: url)
+                                                self.isShowingDownloadlView = false
+                                                
+                                                return
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            
+                            print("LOG asdasd")
                             self.isShowingDownloadlView = true
                             self.isLoading = false
-                            print(responseText)
+                            
                         } else {
                             // Dizeyi veriye dönüştürme hatası
                             showError()

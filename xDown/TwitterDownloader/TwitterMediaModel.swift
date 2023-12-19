@@ -30,6 +30,10 @@ struct TweetResult: Codable {
 // MARK: - Result
 struct Result: Codable {
     let legacy: Legacy?
+    
+    enum CodingKeys: String, CodingKey {
+        case legacy
+    }
 }
 
 // MARK: - Legacy
