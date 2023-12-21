@@ -16,7 +16,7 @@ struct HomeView: View {
         
         NavigationView {
             VStack(alignment: .leading) {
-                NavigationLink(destination: DownloadView(twitterMedia: twitterDownloader.twitterMedia), isActive: $twitterDownloader.isShowingDownloadlView) {  }
+                NavigationLink(destination: DownloadView(data: twitterDownloader.data), isActive: $twitterDownloader.isShowingDownloadlView) {  }
                 
                 
                 //MARK: TOP BUTTONS
