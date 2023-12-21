@@ -10,7 +10,7 @@ import SDWebImageSwiftUI
 import AVKit
 
 struct DownloadView: View {
-    var data: [DetailModel]?
+    var data: [DetailModel]
     @State private var isPresented = false
     @State private var selectedTab: Int = 0
     
@@ -24,7 +24,7 @@ struct DownloadView: View {
     
     var body: some View {
         VStack {
-            if let data  {
+            if data.count > 0  {
                 // Yukarıdaki yarıda fotoğraf ve oynatma butonu
                 
                 TabView(selection: $selectedTab) {
@@ -118,6 +118,8 @@ struct MediaItem: View {
             if (isPlaying && player != nil) {
                 VideoPlayer(player: player)
                     .aspectRatio(contentMode: .fit)
+                    .frame(maxWidth: .infinity)
+                    .frame(maxHeight: .infinity)
                 
                 Button(action: {
                     // Videoyu oynatma işlemleri buraya eklenecek

@@ -11,12 +11,16 @@ class TwitterVideoDownloaderVM: NSObject, ObservableObject, WKNavigationDelegate
     @Published var downloadResult: String?
     @Published var isLoading: Bool = false
     @Published var isShowingDownloadlView = false
+    @Published var errorMsg: String?
     
     func getVideo(from url: String) {
-        guard url != "" else { return }
-    
-        showWebView = false
-        setupWebView(with: url)
+        guard url.lowercased().contains("http") else { return }
+        guard let url = URL(string: url) else { return }
+        
+        self.errorMsg = nil
+        self.data = []
+        self.showWebView = false
+        self.setupWebView(with: url)
     }
     
     /// Gönderilien urlden video kalitesini döner.
@@ -42,10 +46,7 @@ class TwitterVideoDownloaderVM: NSObject, ObservableObject, WKNavigationDelegate
                         let split2 = split[1].components(separatedBy: "\"extended_entities\":{")
                         if split2.count > 1 {
                             if let url =  split2[1].findBetween(start: "\"expanded_url\":\"", end: "\"") {
-                                
                                 self.getVideo(from: url)
-                                self.isShowingDownloadlView = false
-                                
                                 return
                             }
                         }
@@ -91,19 +92,18 @@ class TwitterVideoDownloaderVM: NSObject, ObservableObject, WKNavigationDelegate
                 
                 self.isShowingDownloadlView = true
                 self.isLoading = false
-                
             } else {
                 // Dizeyi veriye dönüştürme hatası
-                showError()
+                self.errorMsg = "Veri işlenemedi."
             }
         } catch {
             // Çözümleme hatası
-            showError()
+            self.errorMsg = "Veri işlenemedi."
         }
         
     }
     
-    private func setupWebView(with url: String) {
+    private func setupWebView(with url: URL) {
         isLoading = true
         let config = WKWebViewConfiguration()
         let userScript = WKUserScript(source: getScript(), injectionTime: .atDocumentStart, forMainFrameOnly: false)
@@ -112,7 +112,7 @@ class TwitterVideoDownloaderVM: NSObject, ObservableObject, WKNavigationDelegate
         
         wkWebView = WKWebView(frame: .zero, configuration: config)
         wkWebView?.navigationDelegate = self 
-        wkWebView?.load(URLRequest(url: URL(string: url)!))
+        wkWebView?.load(URLRequest(url: url))
     }
     
     private func getScript() -> String {
@@ -128,8 +128,16 @@ class TwitterVideoDownloaderVM: NSObject, ObservableObject, WKNavigationDelegate
         return ""
     }
     
-    func showError() {
-        
+    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        self.isLoading = false
+        self.isShowingDownloadlView = false
+        errorMsg = error.localizedDescription
+    }
+
+    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+        self.isLoading = false
+        self.isShowingDownloadlView = false
+        errorMsg = error.localizedDescription
     }
     
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {

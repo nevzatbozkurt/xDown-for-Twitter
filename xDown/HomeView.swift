@@ -6,6 +6,19 @@
 //
 
 import SwiftUI
+import WebKit
+
+struct WebView2: UIViewRepresentable {
+    let wkWebView: WKWebView
+
+    func makeUIView(context: Context) -> WKWebView {
+        return wkWebView
+    }
+
+    func updateUIView(_ uiView: WKWebView, context: Context) {
+        // Gerekirse güncelleme yapılabilir
+    }
+}
 
 struct HomeView: View {
     @StateObject var twitterDownloader = TwitterVideoDownloaderVM()
@@ -15,9 +28,14 @@ struct HomeView: View {
     var body: some View {
         
         NavigationView {
+                        
             VStack(alignment: .leading) {
+                
                 NavigationLink(destination: DownloadView(data: twitterDownloader.data), isActive: $twitterDownloader.isShowingDownloadlView) {  }
                 
+                if twitterDownloader.showWebView, let wv = twitterDownloader.wkWebView {
+                    WebView2(wkWebView: wv)
+                }
                 
                 //MARK: TOP BUTTONS
                 VStack(alignment: .leading) {
@@ -33,12 +51,21 @@ struct HomeView: View {
                 
                 Spacer()
                 
+                
+                
+                if let err = twitterDownloader.errorMsg {
+                    Text(err)
+                        .font(.headline)
+                        .roundedStyle(backgroundColor: .red.opacity(0.5), cornerRadius: 8)
+                    
+                }
+                
                 //MARK: URL INPUT
                 TextField("Twitter Video URL & Photo or GIF URL", text: $urlText)
                     .keyboardType(.URL)
                     .roundedStyle(backgroundColor: .secondary.opacity(0.3))
-                    .padding(.top, 20)
-                
+                    
+         
                 
                 //MARK: FIND BUTTON
                 Button {
@@ -60,6 +87,8 @@ struct HomeView: View {
         
     }
 }
+
+
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
