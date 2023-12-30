@@ -21,8 +21,8 @@ struct WebView2: UIViewRepresentable {
 }
 
 struct HomeView: View {
-    @StateObject var twitterDownloader = TwitterVideoDownloaderVM()
-    @State var urlText = "https://twitter.com/muratdursun1453/status/1725389764994503127"
+    @StateObject var twitterVM = TwitterViewModel()
+    @State var urlText = "https://twitter.com/FOXhaber/status/1740640127700099084"
     
     
     var body: some View {
@@ -31,9 +31,9 @@ struct HomeView: View {
                         
             VStack(alignment: .leading) {
                 
-                NavigationLink(destination: DownloadView(data: twitterDownloader.data), isActive: $twitterDownloader.isShowingDownloadlView) {  }
+                NavigationLink(destination: DownloadView(data: twitterVM.data), isActive: $twitterVM.isShowingDownloadlView) {  }
                 
-                if twitterDownloader.showWebView, let wv = twitterDownloader.wkWebView {
+                if twitterVM.showWebView, let wv = twitterVM.wkWebView {
                     WebView2(wkWebView: wv)
                 }
                 
@@ -53,7 +53,7 @@ struct HomeView: View {
                 
                 
                 
-                if let err = twitterDownloader.errorMsg {
+                if let err = twitterVM.errorMsg {
                     Text(err)
                         .font(.headline)
                         .roundedStyle(backgroundColor: .red.opacity(0.5), cornerRadius: 8)
@@ -65,13 +65,12 @@ struct HomeView: View {
                     .keyboardType(.URL)
                     .roundedStyle(backgroundColor: .secondary.opacity(0.3))
                     
-         
                 
                 //MARK: FIND BUTTON
                 Button {
-                    twitterDownloader.getVideo(from: urlText)
+                    twitterVM.getVideo(from: urlText)
                 } label: {
-                    if (twitterDownloader.isLoading) {
+                    if (twitterVM.isLoading) {
                         ProgressView()
                                    .progressViewStyle(CircularProgressViewStyle(tint: Color.white))
                                    .roundedStyle(backgroundColor: Color.secondary.opacity(0.88))
@@ -79,7 +78,7 @@ struct HomeView: View {
                         Text("Find")
                             .roundedStyle(backgroundColor: Color.secondary.opacity(0.88))
                     }
-                }.disabled(twitterDownloader.isLoading)
+                }.disabled(twitterVM.isLoading)
             }
             .padding()
         }

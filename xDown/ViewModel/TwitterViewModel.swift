@@ -3,7 +3,7 @@ import WebKit
 import Alamofire
 
 
-class TwitterVideoDownloaderVM: NSObject, ObservableObject, WKNavigationDelegate, WKScriptMessageHandler {
+class TwitterViewModel: NSObject, ObservableObject, WKNavigationDelegate, WKScriptMessageHandler {
     private let handler = "handler"
     @Published var data: [DetailModel] = []
     @Published var wkWebView: WKWebView?

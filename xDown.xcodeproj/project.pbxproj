@@ -10,13 +10,14 @@
 		F215B70E2B31AF8C00D0F31D /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = F215B70D2B31AF8C00D0F31D /* Alamofire */; };
 		F215B7102B31E11000D0F31D /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = F215B70F2B31E11000D0F31D /* String.swift */; };
 		F2A690912B345FB8004A29E5 /* DetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A690902B345FB8004A29E5 /* DetailModel.swift */; };
+		F2ACD8962B40799B00B57D59 /* VideoDownloaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2ACD8952B40799B00B57D59 /* VideoDownloaderViewModel.swift */; };
 		F2BBB81A2B192A2400F19867 /* TwitterMediaModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2BBB8192B192A2400F19867 /* TwitterMediaModel.swift */; };
 		F2E35B9A2B060FA800B0F09B /* xDownApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E35B992B060FA800B0F09B /* xDownApp.swift */; };
 		F2E35B9C2B060FA800B0F09B /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E35B9B2B060FA800B0F09B /* HomeView.swift */; };
 		F2E35B9E2B060FA800B0F09B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F2E35B9D2B060FA800B0F09B /* Assets.xcassets */; };
 		F2E35BA12B060FA800B0F09B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F2E35BA02B060FA800B0F09B /* Preview Assets.xcassets */; };
 		F2E35BA92B0612CA00B0F09B /* RoundedStyleModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E35BA82B0612CA00B0F09B /* RoundedStyleModifier.swift */; };
-		F2E35BAD2B062D6B00B0F09B /* TwitterVideoDownloaderVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E35BAC2B062D6B00B0F09B /* TwitterVideoDownloaderVM.swift */; };
+		F2E35BAD2B062D6B00B0F09B /* TwitterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E35BAC2B062D6B00B0F09B /* TwitterViewModel.swift */; };
 		F2E35BAF2B062D8700B0F09B /* script.js in Resources */ = {isa = PBXBuildFile; fileRef = F2E35BAE2B062D8700B0F09B /* script.js */; };
 		F2F6CB242B1A5DCB001AC2EA /* DownloadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F6CB232B1A5DCB001AC2EA /* DownloadView.swift */; };
 		F2F6CB272B1A6355001AC2EA /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = F2F6CB262B1A6355001AC2EA /* SDWebImageSwiftUI */; };
@@ -25,6 +26,7 @@
 /* Begin PBXFileReference section */
 		F215B70F2B31E11000D0F31D /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		F2A690902B345FB8004A29E5 /* DetailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailModel.swift; sourceTree = "<group>"; };
+		F2ACD8952B40799B00B57D59 /* VideoDownloaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoDownloaderViewModel.swift; sourceTree = "<group>"; };
 		F2BBB8192B192A2400F19867 /* TwitterMediaModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitterMediaModel.swift; sourceTree = "<group>"; };
 		F2E35B962B060FA800B0F09B /* xDown.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = xDown.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2E35B992B060FA800B0F09B /* xDownApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = xDownApp.swift; sourceTree = "<group>"; };
@@ -32,7 +34,7 @@
 		F2E35B9D2B060FA800B0F09B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F2E35BA02B060FA800B0F09B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		F2E35BA82B0612CA00B0F09B /* RoundedStyleModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedStyleModifier.swift; sourceTree = "<group>"; };
-		F2E35BAC2B062D6B00B0F09B /* TwitterVideoDownloaderVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwitterVideoDownloaderVM.swift; sourceTree = "<group>"; };
+		F2E35BAC2B062D6B00B0F09B /* TwitterViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwitterViewModel.swift; sourceTree = "<group>"; };
 		F2E35BAE2B062D8700B0F09B /* script.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = script.js; sourceTree = "<group>"; };
 		F2F6CB232B1A5DCB001AC2EA /* DownloadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -111,7 +113,8 @@
 		F2E35BB02B062E0A00B0F09B /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				F2E35BAC2B062D6B00B0F09B /* TwitterVideoDownloaderVM.swift */,
+				F2E35BAC2B062D6B00B0F09B /* TwitterViewModel.swift */,
+				F2ACD8952B40799B00B57D59 /* VideoDownloaderViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -198,7 +201,8 @@
 				F2A690912B345FB8004A29E5 /* DetailModel.swift in Sources */,
 				F2F6CB242B1A5DCB001AC2EA /* DownloadView.swift in Sources */,
 				F2E35B9C2B060FA800B0F09B /* HomeView.swift in Sources */,
-				F2E35BAD2B062D6B00B0F09B /* TwitterVideoDownloaderVM.swift in Sources */,
+				F2ACD8962B40799B00B57D59 /* VideoDownloaderViewModel.swift in Sources */,
+				F2E35BAD2B062D6B00B0F09B /* TwitterViewModel.swift in Sources */,
 				F2E35BA92B0612CA00B0F09B /* RoundedStyleModifier.swift in Sources */,
 				F215B7102B31E11000D0F31D /* String.swift in Sources */,
 				F2E35B9A2B060FA800B0F09B /* xDownApp.swift in Sources */,
@@ -259,7 +263,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -313,7 +317,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -334,6 +338,7 @@
 				DEVELOPMENT_TEAM = 89TMSY79N6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need your permission to save the video to your photo library.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -364,6 +369,7 @@
 				DEVELOPMENT_TEAM = 89TMSY79N6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need your permission to save the video to your photo library.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

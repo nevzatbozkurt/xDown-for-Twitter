@@ -14,9 +14,13 @@ struct DownloadView: View {
     @State private var isPresented = false
     @State private var selectedTab: Int = 0
     
+    @StateObject private var videoDownloadVM = VideoDownloaderViewModel()
+    
     func startDownload(downloadURL: String) {
         if let url = URL(string: downloadURL) {
-            print("LOG: ", url)
+            videoDownloadVM.downloadAndSaveMedia(fromURL: url) { success in
+                print(success)
+            }
         } else {
             //ERROR MESAJI VER
         }
@@ -90,7 +94,16 @@ struct DownloadView: View {
                     }.padding(.horizontal)
                 }
                 .padding(.bottom)
-                
+                .sheet(isPresented: $videoDownloadVM.showNeedAuthView) {
+                    if #available(iOS 16.0, *) {
+                        PermissionView()
+                            .presentationDetents([.height(300)])
+                    } else {
+                        PermissionView()
+                            
+                    }
+                    
+                }
                 
                 
             } else {
@@ -106,6 +119,17 @@ struct DownloadView: View {
     }
 }
 
+
+struct PermissionView: View {
+    var body: some View {
+        Button {
+            UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+        } label: {
+            Text("Yetki yok yetki ver.")
+        }
+
+    }
+}
 
 struct MediaItem: View {
     var media: DetailModel
