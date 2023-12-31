@@ -22,11 +22,9 @@ struct WebView2: UIViewRepresentable {
 
 struct HomeView: View {
     @StateObject var twitterVM = TwitterViewModel()
-    @State var urlText = "https://twitter.com/FOXhaber/status/1740640127700099084"
-    
+    @State var urlText = "https://twitter.com/MelihKarakelle/status/1741412584551502085"
     
     var body: some View {
-        
         NavigationView {
                         
             VStack(alignment: .leading) {
@@ -40,7 +38,7 @@ struct HomeView: View {
                 //MARK: TOP BUTTONS
                 VStack(alignment: .leading) {
                     LabeledIconButton(text: "Help", icon: "envelope")
-                    LabeledIconButton(text: "Remove ADS", icon: "star")
+//                    LabeledIconButton(text: "Remove ADS", icon: "star")
                     LabeledIconButton(text: "How to make a use", icon: "arrow.down.circle")
                 }
                 
@@ -73,10 +71,10 @@ struct HomeView: View {
                     if (twitterVM.isLoading) {
                         ProgressView()
                                    .progressViewStyle(CircularProgressViewStyle(tint: Color.white))
-                                   .roundedStyle(backgroundColor: Color.secondary.opacity(0.88))
+                                   .roundedStyle(backgroundColor: Color.secondary.opacity(0.3))
                     } else {
                         Text("Find")
-                            .roundedStyle(backgroundColor: Color.secondary.opacity(0.88))
+                            .roundedStyle(backgroundColor: Color.secondary.opacity(0.3))
                     }
                 }.disabled(twitterVM.isLoading)
             }

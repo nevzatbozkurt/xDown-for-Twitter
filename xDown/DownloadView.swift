@@ -30,7 +30,6 @@ struct DownloadView: View {
         VStack {
             if data.count > 0  {
                 // Yukarıdaki yarıda fotoğraf ve oynatma butonu
-                
                 TabView(selection: $selectedTab) {
                     ForEach(data) { datum in
                         MediaItem(media: datum)
@@ -38,61 +37,34 @@ struct DownloadView: View {
                     }
                 }
                 .tabViewStyle(.page)
-                
-                VStack {
-                   
-                    
-                    HStack {
-                        Image(systemName: "square.and.arrow.up")
-                            .roundedStyle(backgroundColor: Color.secondary.opacity(0.3))
-                            .frame(width: 90, height: 90)
-                            .padding(0)
-                        
-                        Button("Download to Gallery", action: {
-                            let media = data[selectedTab]
-                            
-                            //Birden fazla kalite var ise önce kalite seçimini yapıp oradan download başlatıyoruz.
-                            if (media.type == .video) {
-                                self.isPresented = true
-                                
-                                //ViewModel Download func.
-                                return
-                            }
-                            
-                            
-                            var downloadURL = ""
-                            //GIF ise url buluyoruz.
-                            if (media.type == .gif) {
-                                if let video = media.video.first?.url {
-                                    downloadURL = video
-                                }
-                            }
-                            
-                            //FOTO ise foto url seçiyoruz..
-                            downloadURL = media.backgroundImageUrl
-                            
-                            
-                            startDownload(downloadURL: downloadURL)
-                            
-                        })
-                            .roundedStyle(backgroundColor: Color.secondary.opacity(0.3))
-                            .actionSheet(isPresented: $isPresented) {
-                            return {
-                                ActionSheet(
-                                    title: Text("Çözünürlük Seç"),
-                                    buttons: data[selectedTab].video.compactMap { datum in
-                                            .default(Text(datum.quality)
-                                            ) {
-                                                startDownload(downloadURL: datum.url)
-                                            //ViewModel Download func.
-                                        }
-                                    } + [.cancel()]
-                                )
-                            }()
-                        }
-                            
-                    }.padding(.horizontal)
+                .disabled(videoDownloadVM.isDownloading)
+                .onChange(of: selectedTab) { _ in
+                    videoDownloadVM.progress = 0.00
                 }
+                
+                if let err = videoDownloadVM.errorMsg {
+                    Text(err)
+                        .font(.headline)
+                        .roundedStyle(backgroundColor: .red.opacity(0.5), cornerRadius: 8)
+                    
+                }
+                
+                //MARK: Download Button
+                HStack {
+                    //Eğer bir download işlemi tamamlandıysa.
+                    if (videoDownloadVM.isDownloadComplated()) {
+                        Button {
+                            guard let url = URL(string: "photos-redirect://") else { return }
+                            UIApplication.shared.open(url)
+                        } label: {
+                            Text("Galeriye Kayıt Edildi. Galeriyi Aç.")
+                        }
+                    } else {
+                        downloadButton
+                    }
+                }
+                .roundedStyle(backgroundColor: videoDownloadVM.isDownloadComplated() ? Color.green.opacity(0.66) :  Color.secondary.opacity(0.3))
+                .padding(.horizontal)
                 .padding(.bottom)
                 .sheet(isPresented: $videoDownloadVM.showNeedAuthView) {
                     if #available(iOS 16.0, *) {
@@ -102,21 +74,67 @@ struct DownloadView: View {
                         PermissionView()
                             
                     }
-                    
                 }
-                
-                
             } else {
                 Text("Video veya fotoğraf bulunamadı.")
             }
             
         }
         .background(Color.black)
-        .edgesIgnoringSafeArea(.all)
+        .edgesIgnoringSafeArea(.top)
+        .edgesIgnoringSafeArea(.horizontal)
         .onDisappear() {
             print("LOG: onDisappear 2")
         }
     }
+
+    
+    @ViewBuilder
+    private var downloadButton: some View {
+        Button {
+            let media = data[selectedTab]
+            
+            //Birden fazla kalite var ise önce kalite seçimini yapıp oradan download başlatıyoruz.
+            if (media.type == .video) {
+                self.isPresented = true
+                
+                //ViewModel Download func.
+                return
+            }
+            
+            var downloadURL = ""
+            //GIF ise url buluyoruz.
+            if (media.type == .gif) {
+                if let video = media.video.first?.url {
+                    downloadURL = video
+                }
+            }
+            
+            //FOTO ise foto url seçiyoruz..
+            downloadURL = media.backgroundImageUrl
+            
+            startDownload(downloadURL: downloadURL)
+            
+        } label: {
+            Text(videoDownloadVM.isDownloading ? "\(Int(videoDownloadVM.progress * 100))%" : "Download to Gallery")
+        }
+        .disabled(videoDownloadVM.isDownloading || videoDownloadVM.isDownloadComplated())
+        .actionSheet(isPresented: $isPresented) {
+            return {
+                ActionSheet(
+                    title: Text("Çözünürlük Seç"),
+                    buttons: data[selectedTab].video.compactMap { datum in
+                            .default(Text(datum.quality)
+                            ) {
+                                startDownload(downloadURL: datum.url)
+                            //ViewModel Download func.
+                        }
+                    } + [.cancel()]
+                )
+            }()
+        }
+    }
+    
 }
 
 
