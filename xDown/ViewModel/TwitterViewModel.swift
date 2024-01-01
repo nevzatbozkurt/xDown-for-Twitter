@@ -13,8 +13,17 @@ class TwitterViewModel: NSObject, ObservableObject, WKNavigationDelegate, WKScri
     @Published var isShowingDownloadlView = false
     @Published var errorMsg: String?
     
+    func isValidUrl(url: String) -> Bool {
+        return url.lowercased().contains("https://x.com") ||
+        url.lowercased().contains("https://twitter.com") ||
+        url.lowercased().contains("https://t.co")
+    }
+    
     func getVideo(from url: String) {
-        guard url.lowercased().contains("http") else { return }
+        guard
+            isValidUrl(url: url)
+        else { errorMsg = "Please enter a valid twitter address. (x.com, twitter.com, t.co)" ; return }
+        
         guard let url = URL(string: url) else { return }
         
         self.errorMsg = nil
@@ -51,6 +60,22 @@ class TwitterViewModel: NSObject, ObservableObject, WKNavigationDelegate, WKScri
                             }
                         }
                     }
+                } else if (medias == nil && responseText.contains("\"card\":{")) {
+                    //FIXED: https://twitter.com/aykiricomtr/status/1741788570833109021
+                    //Card şeklinde siteye yönlendirmeli olursa buraya geliyor.
+                    let img = responseText.findBetween(start: #"\"media_url_https\":\""#, end: #"\""#) ?? ""
+                    var video: [DetailVideoModel] = []
+                        
+                    let splits = responseText.components(separatedBy: #""content_type\":\"video/mp4\""#)
+                    for split in splits {
+                        let url = split.findBetween(start: #",\"url\":\""#, end: #"\""#)
+                        if ( url?.contains(".mp4") == true) {
+                            video.append(DetailVideoModel(url: url!, quality: getQuality(from: url!)))
+                        }
+                    }
+                    
+                    let data = DetailModel(id: 0, type: responseText.contains(".mp4")  ? .video : .photo, backgroundImageUrl: img, video: video)
+                    self.data.append(data)
                 }
                 
                 var i = 0
@@ -85,7 +110,7 @@ class TwitterViewModel: NSObject, ObservableObject, WKNavigationDelegate, WKScri
                         
                         let detailModel = DetailModel(id: i, type: mediaType, backgroundImageUrl: img, video: video)
                         self.data.append(detailModel)
-                        print("LOG:", self.data)
+                        //print("LOG:", self.data)
                         i += 1
                     }
                 }

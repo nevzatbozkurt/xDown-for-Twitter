@@ -116,7 +116,7 @@ struct DownloadView: View {
             startDownload(downloadURL: downloadURL)
             
         } label: {
-            Text(videoDownloadVM.isDownloading ? "\(Int(videoDownloadVM.progress * 100))%" : "Download to Gallery")
+            Text(videoDownloadVM.isDownloading ? "Downloading: \(Int(videoDownloadVM.progress * 100))%" : "Download to Gallery")
         }
         .disabled(videoDownloadVM.isDownloading || videoDownloadVM.isDownloadComplated())
         .actionSheet(isPresented: $isPresented) {
@@ -159,9 +159,9 @@ struct MediaItem: View {
         ZStack(alignment: .center) {
             if (isPlaying && player != nil) {
                 VideoPlayer(player: player)
-                    .aspectRatio(contentMode: .fit)
-                    .frame(maxWidth: .infinity)
-                    .frame(maxHeight: .infinity)
+                    //.aspectRatio(contentMode: .fit)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .background(Color.red)
                 
                 Button(action: {
                     // Videoyu oynatma işlemleri buraya eklenecek

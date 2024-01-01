@@ -8,21 +8,28 @@
 import SwiftUI
 import WebKit
 
-struct WebView2: UIViewRepresentable {
-    let wkWebView: WKWebView
-
-    func makeUIView(context: Context) -> WKWebView {
-        return wkWebView
-    }
-
-    func updateUIView(_ uiView: WKWebView, context: Context) {
-        // Gerekirse güncelleme yapılabilir
-    }
-}
-
 struct HomeView: View {
+    @Environment(\.openURL) private var openURL
     @StateObject var twitterVM = TwitterViewModel()
-    @State var urlText = "https://twitter.com/MelihKarakelle/status/1741412584551502085"
+    @State var urlText = ""
+    
+    func pasteFromboard() {
+        if let clipboardText = UIPasteboard.general.string {
+            if let _ = URL(string: clipboardText) {
+                guard twitterVM.isValidUrl(url: clipboardText) else { return }
+                
+                self.urlText = clipboardText
+                findButtonActions()
+            }
+        }
+    }
+    
+    func mailto(_ email: String) {
+        let mailto = "mailto:\(email)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+        if let url = URL(string: mailto!) {
+            openURL(url)
+        }
+    }
     
     var body: some View {
         NavigationView {
@@ -37,7 +44,14 @@ struct HomeView: View {
                 
                 //MARK: TOP BUTTONS
                 VStack(alignment: .leading) {
-                    LabeledIconButton(text: "Help", icon: "envelope")
+                    Button {
+                        mailto("nevzatbozkurtapp@gmail.com")
+                    } label: {
+                        LabeledIconButton(text: "Help", icon: "envelope")
+                    }.foregroundColor(.white)
+
+                            
+                    
 //                    LabeledIconButton(text: "Remove ADS", icon: "star")
                     LabeledIconButton(text: "How to make a use", icon: "arrow.down.circle")
                 }
@@ -46,10 +60,8 @@ struct HomeView: View {
                 
                 //MARK: ADMOB BANNER
                 
-                
+
                 Spacer()
-                
-                
                 
                 if let err = twitterVM.errorMsg {
                     Text(err)
@@ -59,14 +71,34 @@ struct HomeView: View {
                 }
                 
                 //MARK: URL INPUT
-                TextField("Twitter Video URL & Photo or GIF URL", text: $urlText)
-                    .keyboardType(.URL)
-                    .roundedStyle(backgroundColor: .secondary.opacity(0.3))
+                HStack(alignment: .firstTextBaseline, spacing: 0) {
+                    TextField("Twitter Video URL & Photo or GIF URL", text: $urlText)
+                        .keyboardType(.URL)
+                        .roundedStyle(backgroundColor: .secondary.opacity(0.3))
+                        .onChange(of: urlText) { _ in
+                            twitterVM.errorMsg = nil
+                        }
+                    
+                    
+                    Button {
+                        pasteFromboard()
+                    } label: {
+                        Image(systemName: "doc.on.clipboard.fill")
+                            .padding(6)
+                            .frame(width: 50, height: 50)
+                            .foregroundColor(.primary.opacity(0.3))
+                            .background(Color.secondary.opacity(0.3))
+                            .clipShape(RoundedRectangle(cornerRadius: 12))
+                            .font(.title2)
+                    }
+
+                   
+                }
                     
                 
                 //MARK: FIND BUTTON
                 Button {
-                    twitterVM.getVideo(from: urlText)
+                    findButtonActions()
                 } label: {
                     if (twitterVM.isLoading) {
                         ProgressView()
@@ -80,8 +112,36 @@ struct HomeView: View {
             }
             .padding()
         }
+        .onOpenURL { incomingURL in
+           handleIncomingURL(url: incomingURL)
+        }
+        .onAppear() {
+            DispatchQueue.main.asyncAfter(deadline: .now()+0.1) {
+                pasteFromboard()
+            }
+        }
+    }
+    
+    private func findButtonActions() {
+        twitterVM.getVideo(from: urlText)
+    }
+    
+    private func handleIncomingURL(url: URL) {
+        guard url.scheme == "nevzatbozkurtxdown" else {
+            return
+        }
+        guard let components = URLComponents(url: url, resolvingAgainstBaseURL: true) else {
+            print("LOG: Invalid URL")
+            return
+        }
+
+        guard let urlQuery = components.queryItems?.first(where: { $0.name == "url" })?.value else {
+            print("LOG: url name not found")
+            return
+        }
         
-        
+        self.urlText = urlQuery
+        findButtonActions()
     }
 }
 
@@ -111,5 +171,17 @@ struct LabeledIconButton: View {
                 .padding([.horizontal])
                 .foregroundColor(.white)
         }.font(.title2)
+    }
+}
+
+struct WebView2: UIViewRepresentable {
+    let wkWebView: WKWebView
+
+    func makeUIView(context: Context) -> WKWebView {
+        return wkWebView
+    }
+
+    func updateUIView(_ uiView: WKWebView, context: Context) {
+        // Gerekirse güncelleme yapılabilir
     }
 }
