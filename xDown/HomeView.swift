@@ -13,10 +13,15 @@ struct HomeView: View {
     @StateObject var twitterVM = TwitterViewModel()
     @State var urlText = ""
     
-    func pasteFromboard() {
+    func pasteFromboard(showErrorMessage : Bool = false) {
         if let clipboardText = UIPasteboard.general.string {
             if let _ = URL(string: clipboardText) {
-                guard twitterVM.isValidUrl(url: clipboardText) else { return }
+                guard twitterVM.isValidUrl(url: clipboardText) else {
+                    if showErrorMessage {
+                        twitterVM.errorMsg = twitterVM.defaultErrorMsg;
+                    }
+                    return
+                }
                 
                 self.urlText = clipboardText
                 findButtonActions()
@@ -72,7 +77,7 @@ struct HomeView: View {
                 
                 //MARK: URL INPUT
                 HStack(alignment: .firstTextBaseline, spacing: 0) {
-                    TextField("Twitter Video URL & Photo or GIF URL", text: $urlText)
+                    TextField("Twitter Video URL & Photo or GIF URL", text: $urlText, onCommit: findButtonActions)
                         .keyboardType(.URL)
                         .roundedStyle(backgroundColor: .secondary.opacity(0.3))
                         .onChange(of: urlText) { _ in
@@ -81,7 +86,7 @@ struct HomeView: View {
                     
                     
                     Button {
-                        pasteFromboard()
+                        pasteFromboard(showErrorMessage: true)
                     } label: {
                         Image(systemName: "doc.on.clipboard.fill")
                             .padding(6)

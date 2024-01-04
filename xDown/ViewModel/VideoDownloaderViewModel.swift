@@ -35,7 +35,9 @@ class VideoDownloaderViewModel: ObservableObject {
         PHPhotoLibrary.requestAuthorization { status in
             guard status == .authorized else {
                 print("Error saving video: unauthorized access")
-                self.showNeedAuthView = true
+                DispatchQueue.main.async {
+                    self.showNeedAuthView = true
+                }
                 return
             }
             

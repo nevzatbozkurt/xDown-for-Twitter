@@ -12,6 +12,7 @@ class TwitterViewModel: NSObject, ObservableObject, WKNavigationDelegate, WKScri
     @Published var isLoading: Bool = false
     @Published var isShowingDownloadlView = false
     @Published var errorMsg: String?
+    let defaultErrorMsg = "Please enter a valid twitter address. (x.com, twitter.com, t.co)"
     
     func isValidUrl(url: String) -> Bool {
         return url.lowercased().contains("https://x.com") ||
@@ -22,14 +23,15 @@ class TwitterViewModel: NSObject, ObservableObject, WKNavigationDelegate, WKScri
     func getVideo(from url: String) {
         guard
             isValidUrl(url: url)
-        else { errorMsg = "Please enter a valid twitter address. (x.com, twitter.com, t.co)" ; return }
+        else { errorMsg = self.defaultErrorMsg ; return }
         
         guard let url = URL(string: url) else { return }
         
-        self.errorMsg = nil
-        self.data = []
-        self.showWebView = false
+        self.clearGetVideo()
         self.setupWebView(with: url)
+        
+        //Hide Keyboard
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
     
     /// Gönderilien urlden video kalitesini döner.
@@ -119,13 +121,22 @@ class TwitterViewModel: NSObject, ObservableObject, WKNavigationDelegate, WKScri
                 self.isLoading = false
             } else {
                 // Dizeyi veriye dönüştürme hatası
-                self.errorMsg = "Veri işlenemedi."
+                self.errorMsg = "Data could not be processed"
             }
         } catch {
             // Çözümleme hatası
-            self.errorMsg = "Veri işlenemedi."
+            self.errorMsg = "Data could not be analysed."
         }
         
+    }
+    
+    ///İşlemi iptal et
+    private func clearGetVideo() {
+        self.isLoading = false
+        self.errorMsg = nil
+        self.data = []
+        self.showWebView = false
+        self.isShowingDownloadlView = false
     }
     
     private func setupWebView(with url: URL) {
@@ -145,12 +156,23 @@ class TwitterViewModel: NSObject, ObservableObject, WKNavigationDelegate, WKScri
             do {
                 return try String(contentsOfFile: filepath)
             } catch {
-                print(error)
+                print(error.localizedDescription)
             }
         } else {
-            print("script.js not found!")
+//            print("script.js not found!")
         }
         return ""
+    }
+    
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+//        print("LOG: YÜKLENME BİTTİ")
+        //20 saniye içinde data parse edilmediyse yani download sayfasına geçilmediyse işlemi iptal et.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
+            // Anasayfada ve loading de ise.
+            guard self.isShowingDownloadlView == false, self.isLoading else { return }
+            self.clearGetVideo()
+            self.errorMsg = "Cancelled due to timeout, please try again."
+        }
     }
     
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {

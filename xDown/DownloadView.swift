@@ -10,6 +10,8 @@ import SDWebImageSwiftUI
 import AVKit
 
 struct DownloadView: View {
+    @Environment(\.presentationMode) private var presentationMode
+    
     var data: [DetailModel]
     @State private var isPresented = false
     @State private var selectedTab: Int = 0
@@ -57,7 +59,7 @@ struct DownloadView: View {
                             guard let url = URL(string: "photos-redirect://") else { return }
                             UIApplication.shared.open(url)
                         } label: {
-                            Text("Galeriye Kayıt Edildi. Galeriyi Aç.")
+                            Text("Saved to Gallery. Open Gallery.")
                         }
                     } else {
                         downloadButton
@@ -76,7 +78,18 @@ struct DownloadView: View {
                     }
                 }
             } else {
-                Text("Video veya fotoğraf bulunamadı.")
+                ZStack {
+                    Text("No video or photo found.")
+                        .padding(.bottom, 20)
+                    
+                    VStack() {
+                        Button("Go Back") {
+                            presentationMode.wrappedValue.dismiss()
+                        }
+                        .foregroundColor(.red)
+                    }
+                    .frame(maxHeight: .infinity, alignment: .bottom)
+                }
             }
             
         }
@@ -122,7 +135,7 @@ struct DownloadView: View {
         .actionSheet(isPresented: $isPresented) {
             return {
                 ActionSheet(
-                    title: Text("Çözünürlük Seç"),
+                    title: Text("Select Resolution"),
                     buttons: data[selectedTab].video.compactMap { datum in
                             .default(Text(datum.quality)
                             ) {
@@ -143,9 +156,10 @@ struct PermissionView: View {
         Button {
             UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
         } label: {
-            Text("Yetki yok yetki ver.")
+            Text("I do not have authorisation to download to your gallery, please authorise by clicking.\n\nIt is not necessary to give access to all photos for downloading, it is enough to authorise an unnecessary photo.")
+                .foregroundColor(.red.opacity(0.9))
         }
-
+        .padding()
     }
 }
 
@@ -215,15 +229,16 @@ struct MediaItem: View {
     }
 }
 
-//struct DownloadView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        let media = Media(displayURL: "http://display.url", expandedURL: "https://expanded.url", mediaURLHTTPS: "https://pbs.twimg.com/amplify_video_thumb/1730346441280016384/img/x62JpvlUS_3TC8fM.jpg", type: "video", url: "https://t.co/dP0xZwhCu3", videoInfo: VideoInfo(aspectRatio: [9,16], durationMillis: 21666, variants: [
-//            Variant(contentType: "video/mp4", url: "https://video.twimg.com/amplify_video/1730346441280016384/vid/avc1/720x1280/pql7Uuw2pWCiCuXz.mp4?tag=14", bitrate: 2176000),
-//            Variant(contentType: "video/mp4", url: "https://video.twimg.com/amplify_video/1730346441280016384/vid/avc1/320x568/pql7Uuw2pWCiCuXz.mp4?tag=14", bitrate: 632000),
-//            Variant(contentType: "video/mp4", url: "https://video.twimg.com/amplify_video/1730346441280016384/vid/avc1/480x852/pql7Uuw2pWCiCuXz.mp4?tag=14", bitrate: 950000)
-//            ]))
-//
-//        let twitterMedia: TwitterMediaModel? = TwitterMediaModel(data: DataClass(tweetResult: TweetResult(result: Result(legacy: Legacy(entities: Entities(media: [media,media]), fullText: "Deneme")))))
-//        DownloadView(twitterMedia: twitterMedia)
-//    }
-//}
+struct DownloadView_Previews: PreviewProvider {
+    static var previews: some View {
+        let media = Media(displayURL: "http://display.url", expandedURL: "https://expanded.url", mediaURLHTTPS: "https://pbs.twimg.com/amplify_video_thumb/1730346441280016384/img/x62JpvlUS_3TC8fM.jpg", type: "video", url: "https://t.co/dP0xZwhCu3", videoInfo: VideoInfo(aspectRatio: [9,16], durationMillis: 21666, variants: [
+            Variant(contentType: "video/mp4", url: "https://video.twimg.com/amplify_video/1730346441280016384/vid/avc1/720x1280/pql7Uuw2pWCiCuXz.mp4?tag=14", bitrate: 2176000),
+            Variant(contentType: "video/mp4", url: "https://video.twimg.com/amplify_video/1730346441280016384/vid/avc1/320x568/pql7Uuw2pWCiCuXz.mp4?tag=14", bitrate: 632000),
+            Variant(contentType: "video/mp4", url: "https://video.twimg.com/amplify_video/1730346441280016384/vid/avc1/480x852/pql7Uuw2pWCiCuXz.mp4?tag=14", bitrate: 950000)
+            ]))
+
+        let _ : TwitterMediaModel? = TwitterMediaModel(data: DataClass(tweetResult: TweetResult(result: Result(legacy: Legacy(entities: Entities(media: [media,media]), fullText: "Deneme")))))
+        DownloadView(data: [])
+            .preferredColorScheme(.dark)
+    }
+}
