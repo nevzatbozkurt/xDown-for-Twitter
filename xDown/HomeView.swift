@@ -11,22 +11,23 @@ import WebKit
 struct HomeView: View {
     @Environment(\.openURL) private var openURL
     @StateObject var twitterVM = TwitterViewModel()
-    @State var urlText = ""
+    @State var urlText = ""   
     
     func pasteFromboard(showErrorMessage : Bool = false) {
-        if let clipboardText = UIPasteboard.general.string {
-            if let _ = URL(string: clipboardText) {
-                guard twitterVM.isValidUrl(url: clipboardText) else {
-                    if showErrorMessage {
-                        twitterVM.errorMsg = twitterVM.defaultErrorMsg;
-                    }
-                    return
-                }
-                
-                self.urlText = clipboardText
-                findButtonActions()
+        guard let clipboardText = UIPasteboard.general.string else  { return }
+        guard let _ = URL(string: clipboardText)  else { return }
+        guard clipboardText != urlText else { return }
+        guard twitterVM.isValidUrl(url: clipboardText) else {
+            if showErrorMessage {
+                twitterVM.errorMsg = twitterVM.defaultErrorMsg;
             }
+            return
         }
+        
+        self.urlText = clipboardText
+        findButtonActions()
+        
+        
     }
     
     func mailto(_ email: String) {
@@ -64,7 +65,10 @@ struct HomeView: View {
                 Spacer()
                 
                 //MARK: ADMOB BANNER
-                
+                BannerAdView(adUnitID: adUnitIdBanner)
+                        //.frame(height: screen.height / 2)
+                    .frame(height: 320)
+                             
 
                 Spacer()
                 
@@ -120,10 +124,9 @@ struct HomeView: View {
         .onOpenURL { incomingURL in
            handleIncomingURL(url: incomingURL)
         }
-        .onAppear() {
-            DispatchQueue.main.asyncAfter(deadline: .now()+0.1) {
-                pasteFromboard()
-            }
+        .onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { _ in
+            //Arka plandan ön plana geçince reklamı göster.
+            pasteFromboard()
         }
     }
     

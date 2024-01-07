@@ -9,6 +9,11 @@
 /* Begin PBXBuildFile section */
 		F215B70E2B31AF8C00D0F31D /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = F215B70D2B31AF8C00D0F31D /* Alamofire */; };
 		F215B7102B31E11000D0F31D /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = F215B70F2B31E11000D0F31D /* String.swift */; };
+		F24337D72B49C137007F9B53 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = F24337D62B49C137007F9B53 /* GoogleMobileAds */; };
+		F24337DE2B49C66D007F9B53 /* InterstitialAd.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24337DB2B49C66D007F9B53 /* InterstitialAd.swift */; };
+		F24337E02B49C6C5007F9B53 /* Definitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24337DF2B49C6C5007F9B53 /* Definitions.swift */; };
+		F24337F02B49DC1F007F9B53 /* AppOpenAd.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24337EE2B49DC1F007F9B53 /* AppOpenAd.swift */; };
+		F24337F12B49DC1F007F9B53 /* BannerAdView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24337EF2B49DC1F007F9B53 /* BannerAdView.swift */; };
 		F2A690912B345FB8004A29E5 /* DetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A690902B345FB8004A29E5 /* DetailModel.swift */; };
 		F2ACD8962B40799B00B57D59 /* VideoDownloaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2ACD8952B40799B00B57D59 /* VideoDownloaderViewModel.swift */; };
 		F2BBB81A2B192A2400F19867 /* TwitterMediaModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2BBB8192B192A2400F19867 /* TwitterMediaModel.swift */; };
@@ -52,6 +57,10 @@
 
 /* Begin PBXFileReference section */
 		F215B70F2B31E11000D0F31D /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		F24337DB2B49C66D007F9B53 /* InterstitialAd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterstitialAd.swift; sourceTree = "<group>"; };
+		F24337DF2B49C6C5007F9B53 /* Definitions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Definitions.swift; sourceTree = "<group>"; };
+		F24337EE2B49DC1F007F9B53 /* AppOpenAd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppOpenAd.swift; sourceTree = "<group>"; };
+		F24337EF2B49DC1F007F9B53 /* BannerAdView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BannerAdView.swift; sourceTree = "<group>"; };
 		F2A690902B345FB8004A29E5 /* DetailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailModel.swift; sourceTree = "<group>"; };
 		F2ACD8952B40799B00B57D59 /* VideoDownloaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoDownloaderViewModel.swift; sourceTree = "<group>"; };
 		F2BBB8192B192A2400F19867 /* TwitterMediaModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitterMediaModel.swift; sourceTree = "<group>"; };
@@ -67,7 +76,6 @@
 		F2F82CEE2B42D530004782CD /* shared.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = shared.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2F82CF02B42D531004782CD /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		F2F82CF52B42D531004782CD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F2F82CFD2B42D949004782CD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		F2F82CFE2B42E025004782CD /* xDown.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = xDown.entitlements; sourceTree = "<group>"; };
 		F2F82CFF2B42E034004782CD /* shared.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = shared.entitlements; sourceTree = "<group>"; };
 		F2F82D002B42E34F004782CD /* MainInterface.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainInterface.storyboard; sourceTree = "<group>"; };
@@ -78,6 +86,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F24337D72B49C137007F9B53 /* GoogleMobileAds in Frameworks */,
 				F2F6CB272B1A6355001AC2EA /* SDWebImageSwiftUI in Frameworks */,
 				F215B70E2B31AF8C00D0F31D /* Alamofire in Frameworks */,
 			);
@@ -93,6 +102,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F24337D82B49C66D007F9B53 /* Admob */ = {
+			isa = PBXGroup;
+			children = (
+				F24337EF2B49DC1F007F9B53 /* BannerAdView.swift */,
+				F24337EE2B49DC1F007F9B53 /* AppOpenAd.swift */,
+				F24337DB2B49C66D007F9B53 /* InterstitialAd.swift */,
+			);
+			path = Admob;
+			sourceTree = "<group>";
+		};
 		F2A690922B34620D004A29E5 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -124,13 +143,14 @@
 			isa = PBXGroup;
 			children = (
 				F2F82CFE2B42E025004782CD /* xDown.entitlements */,
-				F2F82CFD2B42D949004782CD /* Info.plist */,
 				F2E35B992B060FA800B0F09B /* xDownApp.swift */,
 				F2E35BA72B0612C400B0F09B /* Extensions */,
 				F2E35B9B2B060FA800B0F09B /* HomeView.swift */,
 				F2F6CB232B1A5DCB001AC2EA /* DownloadView.swift */,
 				F2A690922B34620D004A29E5 /* Model */,
 				F2E35BB02B062E0A00B0F09B /* ViewModel */,
+				F24337D82B49C66D007F9B53 /* Admob */,
+				F24337DF2B49C6C5007F9B53 /* Definitions.swift */,
 				F2E35B9D2B060FA800B0F09B /* Assets.xcassets */,
 				F2E35B9F2B060FA800B0F09B /* Preview Content */,
 			);
@@ -196,6 +216,7 @@
 			packageProductDependencies = (
 				F2F6CB262B1A6355001AC2EA /* SDWebImageSwiftUI */,
 				F215B70D2B31AF8C00D0F31D /* Alamofire */,
+				F24337D62B49C137007F9B53 /* GoogleMobileAds */,
 			);
 			productName = xDown;
 			productReference = F2E35B962B060FA800B0F09B /* xDown.app */;
@@ -248,6 +269,7 @@
 			packageReferences = (
 				F2F6CB252B1A6355001AC2EA /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
 				F215B70C2B31AF8C00D0F31D /* XCRemoteSwiftPackageReference "Alamofire" */,
+				F24337D52B49C137007F9B53 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
 			);
 			productRefGroup = F2E35B972B060FA800B0F09B /* Products */;
 			projectDirPath = "";
@@ -289,10 +311,14 @@
 				F2F6CB242B1A5DCB001AC2EA /* DownloadView.swift in Sources */,
 				F2E35B9C2B060FA800B0F09B /* HomeView.swift in Sources */,
 				F2ACD8962B40799B00B57D59 /* VideoDownloaderViewModel.swift in Sources */,
+				F24337E02B49C6C5007F9B53 /* Definitions.swift in Sources */,
+				F24337DE2B49C66D007F9B53 /* InterstitialAd.swift in Sources */,
+				F24337F02B49DC1F007F9B53 /* AppOpenAd.swift in Sources */,
 				F2E35BAD2B062D6B00B0F09B /* TwitterViewModel.swift in Sources */,
 				F2E35BA92B0612CA00B0F09B /* RoundedStyleModifier.swift in Sources */,
 				F215B7102B31E11000D0F31D /* String.swift in Sources */,
 				F2E35B9A2B060FA800B0F09B /* xDownApp.swift in Sources */,
+				F24337F12B49DC1F007F9B53 /* BannerAdView.swift in Sources */,
 				F2BBB81A2B192A2400F19867 /* TwitterMediaModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -456,6 +482,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.nevzatbozkurt.xDown;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -490,6 +517,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.nevzatbozkurt.xDown;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -593,6 +621,14 @@
 				minimumVersion = 5.0.0;
 			};
 		};
+		F24337D52B49C137007F9B53 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googleads/swift-package-manager-google-mobile-ads.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.0.0;
+			};
+		};
 		F2F6CB252B1A6355001AC2EA /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI.git";
@@ -608,6 +644,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F215B70C2B31AF8C00D0F31D /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
+		};
+		F24337D62B49C137007F9B53 /* GoogleMobileAds */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F24337D52B49C137007F9B53 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */;
+			productName = GoogleMobileAds;
 		};
 		F2F6CB262B1A6355001AC2EA /* SDWebImageSwiftUI */ = {
 			isa = XCSwiftPackageProductDependency;

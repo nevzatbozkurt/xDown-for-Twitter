@@ -11,11 +11,11 @@ import AVKit
 
 struct DownloadView: View {
     @Environment(\.presentationMode) private var presentationMode
-    
+
     var data: [DetailModel]
     @State private var isPresented = false
     @State private var selectedTab: Int = 0
-    
+
     @StateObject private var videoDownloadVM = VideoDownloaderViewModel()
     
     func startDownload(downloadURL: String) {
@@ -96,9 +96,6 @@ struct DownloadView: View {
         .background(Color.black)
         .edgesIgnoringSafeArea(.top)
         .edgesIgnoringSafeArea(.horizontal)
-        .onDisappear() {
-            print("LOG: onDisappear 2")
-        }
     }
 
     

@@ -12,15 +12,19 @@ class TwitterViewModel: NSObject, ObservableObject, WKNavigationDelegate, WKScri
     @Published var isLoading: Bool = false
     @Published var isShowingDownloadlView = false
     @Published var errorMsg: String?
+    @Published var interstitialAd =  InterstitialAd()
+    
     let defaultErrorMsg = "Please enter a valid twitter address. (x.com, twitter.com, t.co)"
     
     func isValidUrl(url: String) -> Bool {
         return url.lowercased().contains("https://x.com") ||
+        url.lowercased().contains("https://video.twitter.com") ||
         url.lowercased().contains("https://twitter.com") ||
         url.lowercased().contains("https://t.co")
     }
     
     func getVideo(from url: String) {
+        print("LOG: get viddeo" )
         guard
             isValidUrl(url: url)
         else { errorMsg = self.defaultErrorMsg ; return }
@@ -119,6 +123,7 @@ class TwitterViewModel: NSObject, ObservableObject, WKNavigationDelegate, WKScri
                 
                 self.isShowingDownloadlView = true
                 self.isLoading = false
+                self.interstitialAd.showAd()
             } else {
                 // Dizeyi veriye dönüştürme hatası
                 self.errorMsg = "Data could not be processed"
