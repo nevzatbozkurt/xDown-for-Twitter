@@ -26,7 +26,7 @@ struct HelpView: View {
     var body: some View {
         VStack {
             Text("How to make a download?")
-                .font(.title.bold())
+                .font(.title2.bold())
                 .padding(.vertical)
         
             TabView(selection: $selectedTab) {
@@ -41,7 +41,7 @@ struct HelpView: View {
                         
                         //MARK: Text Title
                         Text(datum.title)
-                            .font(.title2.bold())
+                            .font(.title3.bold())
                             .padding(.bottom, 4)
                             .foregroundColor(.primary)
 
