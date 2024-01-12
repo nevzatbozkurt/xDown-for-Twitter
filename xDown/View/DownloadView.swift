@@ -13,7 +13,7 @@ struct DownloadView: View {
     @Environment(\.presentationMode) private var presentationMode
 
     var data: [DetailModel]
-    @State private var isPresented = false
+    @State private var isPresentedDownloadSelect = false
     @State private var selectedTab: Int = 0
 
     @StateObject private var videoDownloadVM = VideoDownloaderViewModel()
@@ -106,7 +106,7 @@ struct DownloadView: View {
             
             //Birden fazla kalite var ise önce kalite seçimini yapıp oradan download başlatıyoruz.
             if (media.type == .video) {
-                self.isPresented = true
+                self.isPresentedDownloadSelect = true
                 
                 //ViewModel Download func.
                 return
@@ -129,7 +129,7 @@ struct DownloadView: View {
             Text(videoDownloadVM.isDownloading ? "Downloading: \(Int(videoDownloadVM.progress * 100))%" : "Download to Gallery")
         }
         .disabled(videoDownloadVM.isDownloading || videoDownloadVM.isDownloadComplated())
-        .actionSheet(isPresented: $isPresented) {
+        .actionSheet(isPresented: $isPresentedDownloadSelect) {
             return {
                 ActionSheet(
                     title: Text("Select Resolution"),

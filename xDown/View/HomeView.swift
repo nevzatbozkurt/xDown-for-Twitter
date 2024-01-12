@@ -11,7 +11,8 @@ import WebKit
 struct HomeView: View {
     @Environment(\.openURL) private var openURL
     @StateObject var twitterVM = TwitterViewModel()
-    @State var urlText = ""   
+    @State var urlText = ""
+    @State private var isPresentedHelpView = false
     
     func pasteFromboard(showErrorMessage : Bool = false) {
         guard let clipboardText = UIPasteboard.general.string else  { return }
@@ -54,12 +55,17 @@ struct HomeView: View {
                         mailto("nevzatbozkurtapp@gmail.com")
                     } label: {
                         LabeledIconButton(text: "Help", icon: "envelope")
-                    }.foregroundColor(.white)
+                    }.foregroundColor(.primary)
 
                             
+                    Button {
+                        self.isPresentedHelpView.toggle()
+                    } label: {
+                        LabeledIconButton(text: "How to make a use", icon: "arrow.down.circle")
+                    }.foregroundColor(.primary)
                     
 //                    LabeledIconButton(text: "Remove ADS", icon: "star")
-                    LabeledIconButton(text: "How to make a use", icon: "arrow.down.circle")
+                   
                 }
                 
                 Spacer()
@@ -127,6 +133,14 @@ struct HomeView: View {
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { _ in
             //Arka plandan ön plana geçince reklamı göster.
             pasteFromboard()
+        }
+        .sheet(isPresented: $isPresentedHelpView) {
+            if #available(iOS 16.0, *) {
+                HelpView()
+                    .presentationDetents([.height(555)])
+            } else {
+                HelpView()
+            }
         }
     }
     
