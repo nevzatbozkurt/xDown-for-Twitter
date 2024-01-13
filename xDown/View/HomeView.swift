@@ -94,12 +94,12 @@ struct HomeView: View {
 //                    Spacer()
                 
                 // MARK: ADMOB BANNER
-                BannerAdView(adUnitID: adUnitIdBanner)
-                    .frame(height: 320)
+                BannerAdView(adUnitID: adUnitIdBanner).frame(height: 320)
 
             }
             .padding()
         }
+        .navigationViewStyle(.stack)
         .accentColor(.primary)
         .keyboardType(.URL)
         .onOpenURL { incomingURL in

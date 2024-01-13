@@ -153,6 +153,11 @@ class TwitterViewModel: NSObject, ObservableObject, WKNavigationDelegate, WKScri
         config.userContentController.addUserScript(userScript)
         config.userContentController.add(self, name: handler)
         
+        //Force Mobile Browser
+        let pref = WKWebpagePreferences.init()
+        pref.preferredContentMode = .mobile
+        config.defaultWebpagePreferences = pref
+        
         wkWebView = WKWebView(frame: .zero, configuration: config)
         wkWebView?.navigationDelegate = self 
         wkWebView?.load(URLRequest(url: url))
