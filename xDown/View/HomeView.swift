@@ -14,36 +14,12 @@ struct HomeView: View {
     @State var urlText = ""
     @State private var isPresentedHelpView = false
     
-    func pasteFromboard(showErrorMessage : Bool = false) {
-        guard let clipboardText = UIPasteboard.general.string else  { return }
-        guard let _ = URL(string: clipboardText)  else { return }
-        guard clipboardText != urlText else { return }
-        guard twitterVM.isValidUrl(url: clipboardText) else {
-            if showErrorMessage {
-                twitterVM.errorMsg = twitterVM.defaultErrorMsg;
-            }
-            return
-        }
-        
-        self.urlText = clipboardText
-        findButtonActions()
-        
-        
-    }
-    
-    func mailto(_ email: String) {
-        let mailto = "mailto:\(email)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
-        if let url = URL(string: mailto!) {
-            openURL(url)
-        }
-    }
-    
     var body: some View {
         NavigationView {
-                        
             VStack(alignment: .leading) {
                 
                 NavigationLink(destination: DownloadView(data: twitterVM.data), isActive: $twitterVM.isShowingDownloadlView) {  }
+                    
                 
                 if twitterVM.showWebView, let wv = twitterVM.wkWebView {
                     WebView2(wkWebView: wv)
@@ -61,27 +37,21 @@ struct HomeView: View {
                     Button {
                         self.isPresentedHelpView.toggle()
                     } label: {
-                        LabeledIconButton(text: "How to make a use", icon: "arrow.down.circle")
+                        LabeledIconButton(text: "How to make a download?", icon: "arrow.down.circle")
                     }.foregroundColor(.primary)
                     
 //                    LabeledIconButton(text: "Remove ADS", icon: "star")
-                   
                 }
-                
+                    
                 Spacer()
-                
-                //MARK: ADMOB BANNER
-                BannerAdView(adUnitID: adUnitIdBanner)
-                        //.frame(height: screen.height / 2)
-                    .frame(height: 320)
-                             
 
-                Spacer()
+                  
                 
                 if let err = twitterVM.errorMsg {
                     Text(err)
-                        .font(.headline)
-                        .roundedStyle(backgroundColor: .red.opacity(0.5), cornerRadius: 8)
+                        .font(.footnote)
+                        .foregroundColor(.red)
+                        .frame(maxWidth:.infinity, alignment: .center)
                     
                 }
                 
@@ -94,7 +64,6 @@ struct HomeView: View {
                             twitterVM.errorMsg = nil
                         }
                     
-                    
                     Button {
                         pasteFromboard(showErrorMessage: true)
                     } label: {
@@ -106,10 +75,7 @@ struct HomeView: View {
                             .clipShape(RoundedRectangle(cornerRadius: 12))
                             .font(.title2)
                     }
-
-                   
                 }
-                    
                 
                 //MARK: FIND BUTTON
                 Button {
@@ -124,9 +90,18 @@ struct HomeView: View {
                             .roundedStyle(backgroundColor: Color.secondary.opacity(0.3))
                     }
                 }.disabled(twitterVM.isLoading)
+                
+//                    Spacer()
+                
+                // MARK: ADMOB BANNER
+                BannerAdView(adUnitID: adUnitIdBanner)
+                    .frame(height: 320)
+
             }
             .padding()
         }
+        .accentColor(.primary)
+        .keyboardType(.URL)
         .onOpenURL { incomingURL in
            handleIncomingURL(url: incomingURL)
         }
@@ -141,6 +116,30 @@ struct HomeView: View {
             } else {
                 HelpView()
             }
+        }
+           
+
+    }
+    
+    func pasteFromboard(showErrorMessage : Bool = false) {
+        guard let clipboardText = UIPasteboard.general.string else  { return }
+        guard let _ = URL(string: clipboardText)  else { return }
+        guard clipboardText != urlText else { return }
+        guard twitterVM.isValidUrl(url: clipboardText) else {
+            if showErrorMessage {
+                twitterVM.errorMsg = twitterVM.defaultErrorMsg;
+            }
+            return
+        }
+        
+        self.urlText = clipboardText
+        findButtonActions()
+    }
+    
+    private func mailto(_ email: String) {
+        let mailto = "mailto:\(email)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+        if let url = URL(string: mailto!) {
+            openURL(url)
         }
     }
     
@@ -182,6 +181,7 @@ struct LabeledIconButton: View {
     var body: some View {
         Label {
             Text(text)
+                .font(.headline)
                 .bold()
                 .offset(x: -15)
             
@@ -189,7 +189,7 @@ struct LabeledIconButton: View {
             Image(systemName: icon)
                 .padding()
                 .background(Color.secondary.opacity(0.2))
-                .clipShape(Circle())
+                .clipShape(RoundedRectangle(cornerRadius: 12))
                 .padding([.horizontal])
                 .foregroundColor(.white)
         }.font(.title2)

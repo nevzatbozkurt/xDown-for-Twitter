@@ -8,6 +8,7 @@
 import GoogleMobileAds
 
 class InterstitialAd: NSObject, GADFullScreenContentDelegate {
+    static var shared = InterstitialAd()
     var interstitialAd: GADInterstitialAd?
     var unitId: String = adUnitIdintersitial
     
@@ -44,10 +45,8 @@ class InterstitialAd: NSObject, GADFullScreenContentDelegate {
         //Reklam sesini açıyoruz.
         GADMobileAds.sharedInstance().applicationVolume = 1.0
         
-        //if let ad = interstitialAd, let root = UIApplication.shared.windows.first?.rootViewController {
-        // Navigation view içinden ana sayfaya dönüyordu last diyerek çözdüm
-        if let ad = interstitialAd, let lastView = UIApplication.shared.windows.last?.rootViewController {
-            ad.present(fromRootViewController: lastView)
+        if let ad = interstitialAd, let root = UIApplication.shared.windows.first?.rootViewController {
+            ad.present(fromRootViewController: root)
         } else {
             print("Ad not ready")
             //isPresented = false

@@ -20,7 +20,7 @@ struct HelpView: View {
         
         HelpModel(id: 4, image: Image("help4"), title: "Step Four", subTitle: "Tap \(Bundle.main.infoDictionary!["CFBundleName"] as! String) app."),
         
-        HelpModel(id: 5, image: Image("help5"), title: "The Last Step", subTitle: "Tap the \"Download to Galary\" button.")
+        HelpModel(id: 5, image: Image("help5"), title: "The Last Step", subTitle: "Tap the \"Download to Gallery\" button.")
     ]
     
     var body: some View {

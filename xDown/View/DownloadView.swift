@@ -15,7 +15,7 @@ struct DownloadView: View {
     var data: [DetailModel]
     @State private var isPresentedDownloadSelect = false
     @State private var selectedTab: Int = 0
-
+    
     @StateObject private var videoDownloadVM = VideoDownloaderViewModel()
     
     func startDownload(downloadURL: String) {

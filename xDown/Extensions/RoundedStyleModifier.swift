@@ -11,7 +11,7 @@ struct RoundedStyleModifier: ViewModifier {
     let backgroundColor: Color
     let cornerRadius: CGFloat
 
-    init(backgroundColor: Color = .blue, cornerRadius: CGFloat = 15) {
+    init(backgroundColor: Color = .blue, cornerRadius: CGFloat = 12) {
         self.backgroundColor = backgroundColor
         self.cornerRadius = cornerRadius
     }
@@ -28,7 +28,7 @@ struct RoundedStyleModifier: ViewModifier {
 }
 
 extension View {
-    func roundedStyle(backgroundColor: Color = .blue, cornerRadius: CGFloat = 15) -> some View {
+    func roundedStyle(backgroundColor: Color = .blue, cornerRadius: CGFloat = 12) -> some View {
         self.modifier(RoundedStyleModifier(backgroundColor: backgroundColor, cornerRadius: cornerRadius))
     }
 }

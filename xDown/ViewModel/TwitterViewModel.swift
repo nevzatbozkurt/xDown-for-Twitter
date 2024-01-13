@@ -24,7 +24,8 @@ class TwitterViewModel: NSObject, ObservableObject, WKNavigationDelegate, WKScri
     }
     
     func getVideo(from url: String) {
-        print("LOG: get viddeo" )
+        guard !url.isEmpty else { return }
+
         guard
             isValidUrl(url: url)
         else { errorMsg = self.defaultErrorMsg ; return }
@@ -36,6 +37,7 @@ class TwitterViewModel: NSObject, ObservableObject, WKNavigationDelegate, WKScri
         
         //Hide Keyboard
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+        print("LOG: get viddeo" )
     }
     
     /// Gönderilien urlden video kalitesini döner.
@@ -172,12 +174,12 @@ class TwitterViewModel: NSObject, ObservableObject, WKNavigationDelegate, WKScri
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
 //        print("LOG: YÜKLENME BİTTİ")
         //20 saniye içinde data parse edilmediyse yani download sayfasına geçilmediyse işlemi iptal et.
-        DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
-            // Anasayfada ve loading de ise.
-            guard self.isShowingDownloadlView == false, self.isLoading else { return }
-            self.clearGetVideo()
-            self.errorMsg = "Cancelled due to timeout, please try again."
-        }
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
+//            // Anasayfada ve loading de ise.
+//            guard self.isShowingDownloadlView == false, self.isLoading else { return }
+//            self.clearGetVideo()
+//            self.errorMsg = "Cancelled due to timeout, please try again."
+//        }
     }
     
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
