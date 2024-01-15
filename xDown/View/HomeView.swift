@@ -52,6 +52,8 @@ struct HomeView: View {
                         .font(.footnote)
                         .foregroundColor(.red)
                         .frame(maxWidth:.infinity, alignment: .center)
+                        .multilineTextAlignment(.center)
+                        .padding(.bottom, 4)
                     
                 }
                 

@@ -8,7 +8,7 @@ class TwitterViewModel: NSObject, ObservableObject, WKNavigationDelegate, WKScri
     @Published var data: [DetailModel] = []
     @Published var wkWebView: WKWebView?
     @Published var showWebView: Bool = false
-    @Published var downloadResult: String?
+//    @Published var downloadResult: String?
     @Published var isLoading: Bool = false
     @Published var isShowingDownloadlView = false
     @Published var errorMsg: String?
@@ -178,8 +178,8 @@ class TwitterViewModel: NSObject, ObservableObject, WKNavigationDelegate, WKScri
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
 //        print("LOG: YÜKLENME BİTTİ")
-        //20 saniye içinde data parse edilmediyse yani download sayfasına geçilmediyse işlemi iptal et.
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
+//        //20 saniye içinde data parse edilmediyse yani download sayfasına geçilmediyse işlemi iptal et.
+//        DispatchQueue.main.asyncAfter(deadline: .now()) {
 //            // Anasayfada ve loading de ise.
 //            guard self.isShowingDownloadlView == false, self.isLoading else { return }
 //            self.clearGetVideo()
